@@ -10861,7 +10861,11 @@ a:focus {
 }
 
 .bg-login-image {
+<<<<<<< HEAD
   background: url("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.tianfupic.com%2F2020%2F0325%2F20200325092239336.jpg&refer=http%3A%2F%2Fimg.tianfupic.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1649746159&t=336e0905f27cba83ed891d448686e21b");
+=======
+  background: url("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fnimg.ws.126.net%2F%3Furl%3Dhttp%253A%252F%252Fdingyue.ws.126.net%252F2021%252F1018%252F97331245j00r166m3008cc000u000mic.jpg%26thumbnail%3D650x2147483647%26quality%3D80%26type%3Djpg&refer=http%3A%2F%2Fnimg.ws.126.net&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1649755467&t=217816d51c3d1276b43f5e9381a8083f");
+>>>>>>> a2428cb (library2)
   background-position: center;
   background-size: cover;
 }

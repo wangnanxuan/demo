@@ -83,8 +83,8 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Custom Components:</h6>
-                <a class="collapse-item" th:href="@{#}">Buttons</a>
-                <a class="collapse-item" th:href="@{#}">Cards</a>
+<!--                <a class="collapse-item" th:href="@{#}">Buttons</a>-->
+<!--                <a class="collapse-item" th:href="@{#}">Cards</a>-->
             </div>
         </div>
     </li>
@@ -354,9 +354,7 @@
                 <span th:if="${#session.getAttribute('user')}!=null and ${#session.getAttribute('user').level == 3}" th:text="'['+ 超级管理员 +']'"></span>
                 <span th:if="${#session.getAttribute('user')}!=null and ${#session.getAttribute('user').level == 2}" th:text="'['+ 用户管理员 +']'"></span>
                 <span th:if="${#session.getAttribute('user')}!=null and ${#session.getAttribute('user').level == 1}" th:text="'['+ 图书管理员 +']'"></span>
-
                 <img class="img-profile rounded-circle" th:src="@{/img/undraw_profile.svg}">
-
             </a>
             <!-- Dropdown - book Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -374,10 +372,9 @@
                     Activity Log
                 </a>
                 <div class="dropdown-divider"></div>
-                <form class="dropdown-item" th:action="@{/logout}" method="post" data-toggle="modal" data-target="#logoutModal">
+                <form class="dropdown-item" th:action="@{/logout}" method="post" data-toggle="modal" data-target="#logoutModal" style="display:inline">
                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                    <input type="submit" value="注销">
-
+                    <input class="dropdown-item" type="submit" value="注销" style="display: inline">
                 </form>
             </div>
         </li>

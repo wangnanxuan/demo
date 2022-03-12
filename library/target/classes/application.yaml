@@ -20,9 +20,9 @@ spring:
 
 
 #日志配置
-#mybatis-plus:
-#  configuration:
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
   global-config:
     db-config:
@@ -35,23 +35,4 @@ spring:
     host: localhost
 
 
-#        #    数据库索引(默认为0)
-#        database: 0
-#        #    连接超时时间(ms)
-#        connect-timeout: 18000000
-#        jedis:
-#          pool:
-#            #        连接池最大连接数
-#            max-active: 20
-#            #        最大阻塞等待时间
-#            max-wait: -1
-#            #        最大空闲连接
-#            max-idle: 5
-#            #        最小空闲连接
-#            min-idle: 0
 
-
-
-#logging:
-#  level:
-#   com.wnx.project01.mapper: debug

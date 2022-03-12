@@ -11,11 +11,11 @@ public interface BookService {
      */
     List<Book> queryAllBooks();
 
-    Book queryBookById(int id);
+    Book queryBookById(Long id);
 
     int saveBook(Book book);
 
     int updateBookById(Book book);
 
-    int deleteBookById(int id);
+    int deleteBookById(Long id);
 }

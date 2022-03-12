@@ -45,14 +45,12 @@ public class BookController{
     //添加图书
     @RequestMapping("/insert")
     public String insert(@RequestParam("multipartFile") MultipartFile multipartFile,
-                         @RequestParam("title") String title,
-                         @RequestParam("author") String author,
-                         @RequestParam("price") String price,
-                         @RequestParam("type") String type,
+                         Book book,
                          HttpSession session){
 
         String imgPath = getImgPath(multipartFile,session);
-        bookService.saveBook(new Book(null,title,author,type,price,imgPath,null,null,null,null));
+        book.setImg(imgPath);
+        bookService.saveBook(book);
         return "redirect:/book/toBookTables";
     }
 
@@ -60,7 +58,7 @@ public class BookController{
     //根据id删除图书
     @RequestMapping("/delete/{id}")
     public String deleteBooK(@PathVariable("id") String id, Model model){
-        int i = bookService.deleteBookById(Integer.parseInt(id));
+        int i = bookService.deleteBookById(Long.parseLong(id));
         if (i == 0){
             model.addAttribute("msg","删除失败");
             return "views/book_tables";
@@ -71,22 +69,19 @@ public class BookController{
 
     @RequestMapping("/toUpdate/{id}")
     public String toUpdate(@PathVariable("id") String id, HttpSession session){
-        Book book = bookService.queryBookById(Integer.parseInt(id));
+        Book book = bookService.queryBookById(Long.parseLong(id));
         session.setAttribute("book",book);
         return "views/book_update";
     }
 
     //根据id更新图书
     @RequestMapping("/update")
-    public String updateBook(@RequestParam("id") String id,
-                             @RequestParam("title") String title,
-                             @RequestParam("author") String author,
-                             @RequestParam("type") String type,
-                             @RequestParam("price") String price,
+    public String updateBook(Book book,
                              @RequestParam("multipartFile")MultipartFile multipartFile,
                              HttpSession session){
         imgPath = getImgPath(multipartFile,session);
-        int i = bookService.updateBookById(new Book(Integer.parseInt(id), title, author,type,price,imgPath,null,null, null, null));
+        book.setImg(imgPath);
+        int i = bookService.updateBookById(book);
         if (i == 0){
             return "views/book_tables";
         }

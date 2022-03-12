@@ -27,14 +27,14 @@ public class MyUserDetailsService implements UserDetailsService {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username",username);
         User user = userMapper.selectOne(queryWrapper);
-        System.out.println(user);
+
 
         if (user==null){
             throw new UsernameNotFoundException("username or password is err");
         }
 
         session.setAttribute("user",user);
-
+        //通过用户等级判断角色权限
         List<GrantedAuthority> roles = null;
         if (user.getLevel()==3){
              roles = AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_LEVEL2,ROLE_LEVEL1");
@@ -48,7 +48,7 @@ public class MyUserDetailsService implements UserDetailsService {
             return new org.springframework.security.core.userdetails.User(user.getUsername(),encode(user.getPassword()),roles);
 
     }
-
+    //加密
     public String encode(String password){
         return new BCryptPasswordEncoder().encode(password);
     }

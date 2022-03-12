@@ -10,12 +10,12 @@ public interface UserService {
 
     List<User> queryAllUsers();
 
-    User queryUserById(int id);
+    User queryUserById(Long id);
 
     int saveUser(User user);
 
     int updateUserById(User user);
 
-    int deleteUserById(int id);
+    int deleteUserById(Long id);
 
 }

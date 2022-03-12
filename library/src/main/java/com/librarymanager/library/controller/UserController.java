@@ -35,27 +35,10 @@ public class UserController {
         return "views/user_insert";
     }
 
-    /**
-     *
-     * @param username 用户名
-     * @param password  密码
-     * @param name 昵称
-     * @param tel 手机号
-     * @param email 邮箱
-     * @param level 用户级别
-     * @param model 添加信息
-     * @return 添加用户成功重定向用户信息页，失败则跳转添加页
-     */
+     //添加用户
     @RequestMapping("/add")
-    public String add(@RequestParam("username") String username,
-                      @RequestParam("password") String password,
-                      @RequestParam("name") String name,
-                      @RequestParam("tel") String tel,
-                      @RequestParam("email") String email,
-                      @RequestParam("level") String level,
-                      Model model){
-
-        int i = userService.saveUser(new User(null, username, password, name, tel, email, Integer.parseInt(level), null, null, null, null));
+    public String add(User user, Model model){
+        int i = userService.saveUser(user);
         if (i == 0){
             return "views/user_insert";
         }
@@ -70,9 +53,8 @@ public class UserController {
      */
     @RequestMapping("/delete/{id}")
     public String delete(@PathVariable("id") String id, Model model){
-        int i = userService.deleteUserById(Integer.parseInt(id));
+        int i = userService.deleteUserById(Long.parseLong(id));
         if (i == 0){
-            model.addAttribute("msg","user delete fail!");
             return "views/user_insert";
         }
         return "redirect:/user/toTable";
@@ -86,32 +68,16 @@ public class UserController {
      */
     @RequestMapping("/toUpdate/{id}")
     public String toUpdate(@PathVariable("id") String id,Model model){
-        User user = userService.queryUserById(Integer.parseInt(id));
+        User user = userService.queryUserById(Long.parseLong(id));
         model.addAttribute("user",user);
         return "views/user_update";
     }
 
-    /**
-     * @param  id 用户id
-     * @param username 用户名
-     * @param password  密码
-     * @param name 昵称
-     * @param tel 手机号
-     * @param email 邮箱
-     * @param level 用户级别
-     * @param model 修改信息
-     * @return 修改用户成功重定向用户信息页，失败则跳转添加页
-     */
+  //修改
     @RequestMapping("/update")
-    public String update(@RequestParam("id") String id,
-                         @RequestParam("username") String username,
-                         @RequestParam("password") String password,
-                         @RequestParam("name") String name,
-                         @RequestParam("tel") String tel,
-                         @RequestParam("email") String email,
-                         @RequestParam("level") String level,
+    public String update(User user,
                          Model model){
-        int i = userService.updateUserById(new User(Integer.parseInt(id), username, password, name, tel, email, Integer.parseInt(level), null, null, null, null));
+        int i = userService.updateUserById(user);
         if (i == 0){
             return "views/user_update";
         }

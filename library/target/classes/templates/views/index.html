@@ -41,99 +41,28 @@
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
+                <div class="col-lg-12 mb-4">
+
+                    <!-- Illustrations -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">图书管理系统介绍</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="text-center">
+                                <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                                     th:src="@{/img/undraw_posting_photo.svg}" alt="...">
+                            </div>
+                            <p>一个简单的图书管理系统后台</p>
+                        </div>
+                    </div>
 
 
-<form id="code_form" class="navbar-expand-sm">
-    <input type="text" placeholder="请输入手机号" th:name="phone_no">
-    <button type="button" id="sendCode">发送验证码</button><br>
-    <font id="countdown" color="red"></font>
-
-    <br><input type="text" placeholder="请填写验证码" th:name="verify_code">
-    <button type="button"  id="verifyCode">确定</button><br>
-    <font id="result" color="green"></font>
-    <font id="error" color="red"></font>
-</form>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <p3>9999元优惠券大放送</p3>
-                <form th:action="@{/secKill}" method="post"id="form_secKill">
-                   <input type="hidden" id="pid" value="1" name="pid">
-                    <input type="button" id="secKill_button" value="点我秒杀！">
-                </form>
-
-            </div>
+                </div>
         </div>
     </div>
 </div>
-
+</div>
 </body>
 </html>
 
-
-
-<script type="text/javascript">
-    //verifyCode
-    var t = 120;//设置倒计时时间
-    var interval;
-    function refer(){
-        $("#countdown").text("请于"+t+"秒内填写验证码");//显示倒计时
-        t--;//计时器递减
-        if(t<=0){
-            clearInterval(interval);
-            $("#countdown").text("验证码已失效请重新发送！");
-        }
-    }
-
-    $(function (){
-        $("#sendCode").click(function (){
-            $.post("/sendCode",$("#code_form").serialize(),function (data){
-                if (data == "true"){
-                    t = 120;
-                    clearInterval(interval);
-                    interval = setInterval("refer()",1000);//启动一秒定时
-                }else if (data == "limit"){
-                    clearInterval(interval);
-                    $("#countdown").text("单日发送超过次数");
-                    $("#sendCode").attr('disabled',true);
-                }
-            })
-        })
-    })
-
-    $("#verifyCode").click(function (){
-        $.post("/verifyCode",$("#code_form").serialize(),function (data){
-            if (data == "true"){
-                $("#result").attr("color","green");
-                $("#result").text("验证成功！");
-                clearInterval(interval);
-                $("countdown").text("");
-            }else {
-                $("#result").attr("color","red");
-                $("#result").text("验证失败！");
-            }
-        })
-    })
-
-
-//secKill
-$(function (){
-    $("#secKill_button").click(function (){
-        $.post("/secKill",$("#form_secKill").serialize(),function (data){
-            if (data == 1){
-                alert("秒杀活动未开始！");
-            }else if(data == 2){
-                alert("已经秒杀过了，请勿重复!");
-            }else if ((data == 3)){
-                alert("秒杀已结束！");
-                $("#secKill_button").attr('disabled',true);
-            }else if(data ==4){
-                alert("秒杀成功!");
-            }
-        })
-    })
-})
-
-</script>

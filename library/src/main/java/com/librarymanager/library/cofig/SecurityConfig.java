@@ -25,11 +25,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/","/index","/css/**","/images/**","/js/**","/scss/**","/vendor/**","/book/toBookTables","/user/toTable","/logout")
+                .antMatchers("/","/index","/css/**","/images/**","/js/**","/scss/**","/vendor/**","/book/**","/user/**","/logout")
                 .permitAll()
-                .antMatchers("/book/toBookTables","/user/toTable").hasAnyRole("LEVEL2","LEVEL1")
-                .antMatchers("/user/toTable").hasRole("LEVEL2")
-                .antMatchers("/book/toBookTables").hasRole("LEVEL1")
+                .antMatchers("/","/index","/book/toBookTables","/user/toTable").hasAnyRole("LEVEL2","LEVEL1")
+                .antMatchers("/user/**").hasRole("LEVEL2")
+                .antMatchers("/book/**").hasRole("LEVEL1")
                 .anyRequest()
                 .authenticated()
                 .and()

@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User queryUserById(int id) {
+    public User queryUserById(Long id) {
         return userMapper.selectById(id);
     }
 
@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int deleteUserById(int id) {
+    public int deleteUserById(Long id) {
         return userMapper.deleteById(id);
     }
 }

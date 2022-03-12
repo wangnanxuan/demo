@@ -16,7 +16,7 @@ import java.util.Date;
 public class Book implements Serializable {
     //id 雪花算法
     @TableId(type = IdType.ASSIGN_ID)
-    private Integer id;
+    private Long id;
     private String title;
     private String author;
     private String type;
