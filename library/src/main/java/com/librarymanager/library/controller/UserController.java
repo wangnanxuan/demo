@@ -54,12 +54,9 @@ public class UserController {
                       @RequestParam("email") String email,
                       @RequestParam("level") String level,
                       Model model){
-        if (level==null||level.equals("")){
-            return "redirect:/user/toTable";
-        }
+
         int i = userService.saveUser(new User(null, username, password, name, tel, email, Integer.parseInt(level), null, null, null, null));
         if (i == 0){
-            model.addAttribute("msg","user insert fail!");
             return "views/user_insert";
         }
         return "redirect:/user/toTable";
@@ -116,7 +113,6 @@ public class UserController {
                          Model model){
         int i = userService.updateUserById(new User(Integer.parseInt(id), username, password, name, tel, email, Integer.parseInt(level), null, null, null, null));
         if (i == 0){
-            model.addAttribute("msg","user update fail!");
             return "views/user_update";
         }
         return "redirect:/user/toTable";

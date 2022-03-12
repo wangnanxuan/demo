@@ -3,8 +3,10 @@ package com.librarymanager.library.controller;
 import com.librarymanager.library.pojo.Book;
 import com.librarymanager.library.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,12 +19,18 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping("/book")
-public class BookController {
-    final static String realPath = "D:\\javaStudy\\springbootDemo\\library\\target\\classes\\static\\img\\books\\";
+public class BookController{
+//获取指定资源的classpath路径
+    public String getRealPath(){
+        return ClassUtils.getDefaultClassLoader().getResource("static/img/books/").getPath();
+    }
+
+    String realPath = getRealPath();
+
     String imgPath = null;
     @Autowired
     private BookService bookService;
-
+    //图书管理页
     @RequestMapping("/toBookTables")
     public String toBookTables(HttpSession session){
         List<Book> books = bookService.queryAllBooks();
@@ -34,7 +42,7 @@ public class BookController {
     public String toInsert(){
         return "views/book_insert";
     }
-
+    //添加图书
     @RequestMapping("/insert")
     public String insert(@RequestParam("multipartFile") MultipartFile multipartFile,
                          @RequestParam("title") String title,
@@ -42,16 +50,14 @@ public class BookController {
                          @RequestParam("price") String price,
                          @RequestParam("type") String type,
                          HttpSession session){
-        if (multipartFile.isEmpty()){
-            return "views/book_tables";
-        }
+
         String imgPath = getImgPath(multipartFile,session);
         bookService.saveBook(new Book(null,title,author,type,price,imgPath,null,null,null,null));
         return "redirect:/book/toBookTables";
     }
 
 
-
+    //根据id删除图书
     @RequestMapping("/delete/{id}")
     public String deleteBooK(@PathVariable("id") String id, Model model){
         int i = bookService.deleteBookById(Integer.parseInt(id));
@@ -70,7 +76,7 @@ public class BookController {
         return "views/book_update";
     }
 
-
+    //根据id更新图书
     @RequestMapping("/update")
     public String updateBook(@RequestParam("id") String id,
                              @RequestParam("title") String title,
@@ -82,20 +88,14 @@ public class BookController {
         imgPath = getImgPath(multipartFile,session);
         int i = bookService.updateBookById(new Book(Integer.parseInt(id), title, author,type,price,imgPath,null,null, null, null));
         if (i == 0){
-            session.setAttribute("msg","修改失败！");
             return "views/book_tables";
         }
         return "redirect:/book/toBookTables";
     }
 
-    /**
-     *
-     * @param multipartFile 上传文件
-     * @return 图片存储路径
-     */
+   //获取图片的路径
     private String getImgPath(MultipartFile multipartFile,HttpSession session) {
         if (multipartFile.isEmpty()){
-            System.out.println(imgPath);
             Book book = (Book) session.getAttribute("book");
             return imgPath = book.getImg();
         }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.support.atomic.RedisAtomicLong;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 @Controller
 public class IndexController {
+
     /**
      * @return 设置首页
      */
@@ -25,9 +27,14 @@ public class IndexController {
     /**
      * @return 跳转登录页
      */
-    @RequestMapping("toLogin")
+    @RequestMapping("/toLogin")
     public String toLogin(){
         return "views/login";
+    }
+
+    @GetMapping("/unAuthorize")
+    public String unAuthorize(){
+        return "views/unAuthorize";
     }
 
     //自动装配redis配置类
