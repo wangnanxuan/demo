@@ -1,0 +1,57 @@
+server:
+  port: 3583
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://localhost/library?useUnicode=true&characterEncoding=utf8
+    type: com.zaxxer.hikari.HikariDataSource
+  servlet:
+    multipart:
+#      单个文件上传最大值
+      max-file-size: 10MB
+#      上传文件的最大值
+      max-request-size: 10MB
+
+
+
+
+
+#日志配置
+#mybatis-plus:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+  global-config:
+    db-config:
+      #逻辑删除配置
+      logic-not-delete-value: 0
+      logic-delete-value: 1
+
+  redis:
+    port: 6379
+    host: localhost
+
+
+#        #    数据库索引(默认为0)
+#        database: 0
+#        #    连接超时时间(ms)
+#        connect-timeout: 18000000
+#        jedis:
+#          pool:
+#            #        连接池最大连接数
+#            max-active: 20
+#            #        最大阻塞等待时间
+#            max-wait: -1
+#            #        最大空闲连接
+#            max-idle: 5
+#            #        最小空闲连接
+#            min-idle: 0
+
+
+
+#logging:
+#  level:
+#   com.wnx.project01.mapper: debug

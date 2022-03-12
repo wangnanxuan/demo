@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link th:replace="~{views/common::common}">
+    <title>SB Admin 2 - Register</title>
+
+
+    <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
+
+
+
+</head>
+
+<body class="bg-gradient-primary">
+
+<div class="container">
+
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                <div class="col-lg-7">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">修改图书</h1>
+                        </div>
+                        <form class="user" th:action="@{/book/update}" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="id" th:value="${#session.getAttribute('book').id}">
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input type="text" class="form-control form-control-user" id="exampleFirstName"
+                                           th:placeholder="${#session.getAttribute('book').title}" name="title" th:value="${#session.getAttribute('book').title}">
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control form-control-user" id="exampleLastName"
+                                           th:placeholder="${#session.getAttribute('book').author}" name="author" th:value="${#session.getAttribute('book').author}">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input type="text" class="form-control form-control-user"
+                                           id="email" th:placeholder="${#session.getAttribute('book').price}" name="price" th:value="${#session.getAttribute('book').price}">
+                                </div>
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input type="text" class="form-control form-control-user"
+                                           id="type" th:placeholder="${#session.getAttribute('book').type}" name="type" th:value="${#session.getAttribute('book').type}">
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="file" name="multipartFile" id="multipartFile" >
+                                    <i class="small">请上传图书图片</i>
+                                </div>
+                            </div>
+                            <input type="submit" value="修改" class="btn btn-primary btn-user btn-block">
+                        </form>
+                        <div class="text-center">
+                            <a class="small" th:href="@{/book/toBookTables}">返回上级</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+
+</html>

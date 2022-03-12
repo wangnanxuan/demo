@@ -1,0 +1,14 @@
+com\librarymanager\library\service\impl\BookServiceImpl.class
+com\librarymanager\library\mapper\UserMapper.class
+com\librarymanager\library\cofig\SecurityConfig.class
+com\librarymanager\library\pojo\Book.class
+com\librarymanager\library\cofig\MybatisConfig.class
+com\librarymanager\library\controller\IndexController.class
+com\librarymanager\library\mapper\BookMapper.class
+com\librarymanager\library\service\UserService.class
+com\librarymanager\library\handle\MyMetaObjectHandler.class
+com\librarymanager\library\service\impl\UserServiceImpl.class
+com\librarymanager\library\controller\BookController.class
+com\librarymanager\library\LibraryApplication.class
+com\librarymanager\library\pojo\User.class
+com\librarymanager\library\service\BookService.class
