@@ -42,7 +42,8 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="text-align: center">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0"
+                                   style="text-align: center">
                                 <thead>
                                 <tr>
                                     <th>ID</th>
@@ -65,7 +66,7 @@
                                     <td th:text="${book.author}"></td>
                                     <td th:text="${book.type}"></td>
                                     <td th:text="${book.price}"></td>
-                                    <td><img th:src="${book.img}" style="width: 50px;height: 50px"  alt=""></td>
+                                    <td><img th:src="${book.img}" style="width: 50px;height: 50px" alt=""></td>
                                     <td th:text="${#dates.format(book.createTime,'yyyy-MM-dd')}"></td>
                                     <td th:text="${#dates.format(book.updateTime,'yyyy-MM-dd')}"></td>
                                     <!--                                            <td th:text="${book.version}"></td>-->
@@ -124,7 +125,6 @@
         </div>
     </div>
 </div>
-
 
 
 </body>

@@ -1,13 +1,12 @@
 package com.librarymanager.library.controller;
 
+import com.librarymanager.library.mapper.UserMapper;
 import com.librarymanager.library.pojo.User;
-import com.librarymanager.library.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -15,7 +14,7 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
     @Autowired
-    private UserService userService;
+    private UserMapper userMapper;
 
     /**
      * @param model 存储用户信息
@@ -23,7 +22,7 @@ public class UserController {
      */
     @RequestMapping("/toTable")
     public String toTable(Model model) {
-        List<User> users = userService.queryAllUsers();
+        List<User> users = userMapper.selectList(null);
         model.addAttribute("users", users);
         return "views/user_tables";
     }
@@ -39,7 +38,7 @@ public class UserController {
     //添加用户
     @RequestMapping("/add")
     public String add(User user, Model model) {
-        int i = userService.saveUser(user);
+        int i = userMapper.insert(user);
         if (i == 0) {
             return "views/user_insert";
         }
@@ -53,7 +52,7 @@ public class UserController {
      */
     @RequestMapping("/delete/{id}")
     public String delete(@PathVariable("id") String id, Model model) {
-        int i = userService.deleteUserById(Long.parseLong(id));
+        int i = userMapper.deleteById(Long.parseLong(id));
         if (i == 0) {
             return "views/user_insert";
         }
@@ -67,7 +66,7 @@ public class UserController {
      */
     @RequestMapping("/toUpdate/{id}")
     public String toUpdate(@PathVariable("id") String id, Model model) {
-        User user = userService.queryUserById(Long.parseLong(id));
+        User user = userMapper.selectById(Long.parseLong(id));
         model.addAttribute("user", user);
         return "views/user_update";
     }
@@ -76,7 +75,7 @@ public class UserController {
     @RequestMapping("/update")
     public String update(User user,
                          Model model) {
-        int i = userService.updateUserById(user);
+        int i = userMapper.updateById(user);
         if (i == 0) {
             return "views/user_update";
         }

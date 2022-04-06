@@ -1,9 +1,8 @@
 package com.librarymanager.library.controller;
 
+import com.librarymanager.library.mapper.BookMapper;
 import com.librarymanager.library.pojo.Book;
-import com.librarymanager.library.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ClassUtils;
@@ -29,11 +28,11 @@ public class BookController {
     String realPath = getRealPath();
     String imgPath = null;
     @Autowired
-    private BookService bookService;
+    private BookMapper bookMapper;
     //图书管理页
     @RequestMapping("/toBookTables")
     public String toBookTables(HttpSession session) {
-        List<Book> books = bookService.queryAllBooks();
+        List<Book> books = bookMapper.selectList(null);
         session.setAttribute("books", books);
         return "views/book_tables";
     }
@@ -51,7 +50,7 @@ public class BookController {
 
         String imgPath = getFilePath(multipartFile, session);
         book.setImg(imgPath);
-        bookService.saveBook(book);
+        bookMapper.insert(book);
         return "redirect:/book/toBookTables";
     }
 
@@ -59,7 +58,7 @@ public class BookController {
     //根据id删除图书
     @RequestMapping("/delete/{id}")
     public String deleteBooK(@PathVariable("id") String id, Model model) {
-        int i = bookService.deleteBookById(Long.parseLong(id));
+        int i = bookMapper.deleteById(Long.parseLong(id));
         if (i == 0) {
             model.addAttribute("msg", "删除失败");
             return "views/book_tables";
@@ -70,7 +69,7 @@ public class BookController {
 
     @RequestMapping("/toUpdate/{id}")
     public String toUpdate(@PathVariable("id") String id, HttpSession session) {
-        Book book = bookService.queryBookById(Long.parseLong(id));
+        Book book = bookMapper.selectById(Long.parseLong(id));
         session.setAttribute("book", book);
         return "views/book_update";
     }
@@ -82,7 +81,7 @@ public class BookController {
                              HttpSession session) {
         imgPath = getFilePath(multipartFile, session);
         book.setImg(imgPath);
-        int i = bookService.updateBookById(book);
+        int i = bookMapper.updateById(book);
         if (i == 0) {
             return "views/book_tables";
         }
