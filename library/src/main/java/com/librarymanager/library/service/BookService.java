@@ -6,7 +6,6 @@ import java.util.List;
 
 public interface BookService {
     /**
-     *
      * @return 查询所有的图书
      */
     List<Book> queryAllBooks();

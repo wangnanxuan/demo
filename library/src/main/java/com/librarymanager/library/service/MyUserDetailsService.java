@@ -22,34 +22,36 @@ public class MyUserDetailsService implements UserDetailsService {
     private UserMapper userMapper;
     @Autowired
     HttpSession session;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("username",username);
+        queryWrapper.eq("username", username);
         User user = userMapper.selectOne(queryWrapper);
 
 
-        if (user==null){
+        if (user == null) {
             throw new UsernameNotFoundException("username or password is err");
         }
 
-        session.setAttribute("user",user);
+        session.setAttribute("user", user);
         //通过用户等级判断角色权限
         List<GrantedAuthority> roles = null;
-        if (user.getLevel()==3){
-             roles = AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_LEVEL2,ROLE_LEVEL1");
-            return new org.springframework.security.core.userdetails.User(user.getUsername(),encode(user.getPassword()),roles);
+        if (user.getLevel() == 3) {
+            roles = AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_LEVEL2,ROLE_LEVEL1");
+            return new org.springframework.security.core.userdetails.User(user.getUsername(), encode(user.getPassword()), roles);
         }
-        if (user.getLevel()==2){
-             roles = AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_LEVEL2");
-            return new org.springframework.security.core.userdetails.User(user.getUsername(),encode(user.getPassword()),roles);
+        if (user.getLevel() == 2) {
+            roles = AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_LEVEL2");
+            return new org.springframework.security.core.userdetails.User(user.getUsername(), encode(user.getPassword()), roles);
         }
-             roles = AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_LEVEL1");
-            return new org.springframework.security.core.userdetails.User(user.getUsername(),encode(user.getPassword()),roles);
+        roles = AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_LEVEL1");
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), encode(user.getPassword()), roles);
 
     }
+
     //加密
-    public String encode(String password){
+    public String encode(String password) {
         return new BCryptPasswordEncoder().encode(password);
     }
 }
