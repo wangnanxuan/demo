@@ -15,10 +15,6 @@ spring:
 #      上传文件的最大值
       max-request-size: 10MB
 
-
-
-
-
 #日志配置
 mybatis-plus:
   configuration:

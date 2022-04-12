@@ -1,41 +1,44 @@
 package com.librarymanager.library.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.librarymanager.library.mapper.BookMapper;
 import com.librarymanager.library.pojo.Book;
+import com.librarymanager.library.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ClassUtils;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Controller
 @RequestMapping("/book")
 public class BookController {
-    //获取指定资源的classpath路径
-    public String getRealPath() {
-        return ClassUtils.getDefaultClassLoader().getResource("static/img/books/").getPath();
-    }
-
     String realPath = getRealPath();
     String imgPath = null;
+
     @Autowired
     private BookMapper bookMapper;
-    //图书管理页
+    @Autowired
+    private BookService bookService;
+
+
     @RequestMapping("/toBookTables")
-    public String toBookTables(HttpSession session) {
-        List<Book> books = bookMapper.selectList(null);
-        session.setAttribute("books", books);
+    public String toBookTables(HttpSession session, @RequestParam(value = "pageNumb", defaultValue = "1") String pageNumb) {
+        Map<String, Object> map = bookService.bookPage(Integer.parseInt(pageNumb), 5);
+        session.setAttribute("books", map);
         return "views/book_tables";
     }
+
 
     @RequestMapping("/toInsert")
     public String toInsert() {
@@ -86,6 +89,11 @@ public class BookController {
             return "views/book_tables";
         }
         return "redirect:/book/toBookTables";
+    }
+
+    //获取指定资源的classpath路径
+    public String getRealPath() {
+        return ClassUtils.getDefaultClassLoader().getResource("static/img/books/").getPath();
     }
 
     //获取图片的路径

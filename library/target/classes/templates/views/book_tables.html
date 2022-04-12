@@ -54,13 +54,11 @@
                                     <th>图片</th>
                                     <th>上架时间</th>
                                     <th>更新时间</th>
-
-                                    <!--                                            <th>version</th>-->
                                     <th>操作</th>
-                                    <th>操作<span th:text="${msg}"></span></th>
+                                    <th>操作></th>
                                 </tr>
                                 </thead>
-                                <tr th:each="book:${#session.getAttribute('books')}">
+                                <tr th:each="book:${#session.getAttribute('books').get('records')}">
                                     <td th:text="${book.id}"></td>
                                     <td th:text="${book.title}"></td>
                                     <td th:text="${book.author}"></td>
@@ -73,8 +71,48 @@
                                     <td><a th:href="@{/book/toUpdate/}+${book.id}">修改</a></td>
                                     <td><a th:href="@{/book/delete/}+${book.id}">删除</a></td>
                                 </tr>
-                                </tbody>
                             </table>
+
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                    <li><a th:href="@{/book/toBookTables(pageNumb=1)}">首页</a></li>
+                                    <li>
+                                         <span th:if="${#session.getAttribute('books').get('previous')}">
+                                            <a th:href="@{/book/toBookTables(pageNumb=${#session.getAttribute('books').get('current')-1})}"
+                                               aria-label="Next">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                        </span>
+                                        <span th:if="!${#session.getAttribute('books').get('previous')}">
+                                            <a th:href="@{/book/toBookTables(pageNumb=${#session.getAttribute('books').get('current')})}"
+                                               aria-label="Next">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                        </span>
+                                    </li>
+                                    <li><a th:href="@{/book/toBookTables(pageNumb=1)}">1</a></li>
+                                    <li><a th:href="@{/book/toBookTables(pageNumb=2)}">2</a></li>
+                                    <li><a th:href="@{/book/toBookTables(pageNumb=3)}">3</a></li>
+                                    <li>
+                                        <span th:if="${#session.getAttribute('books').get('next')}">
+                                            <a th:href="@{/book/toBookTables(pageNumb=${#session.getAttribute('books').get('current')+1})}"
+                                               aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                        </span>
+                                        <span th:if="!${#session.getAttribute('books').get('next')}">
+                                            <a th:href="@{/book/toBookTables(pageNumb=${#session.getAttribute('books').get('current')})}"
+                                               aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <a th:href="@{/book/toBookTables(pageNumb=${#session.getAttribute('books').get('pages')})}">最后一页</a>
+                                    </li>
+                                </ul>
+                            </nav>
+
                         </div>
                     </div>
                 </div>

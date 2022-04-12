@@ -1,5 +1,6 @@
 package com.librarymanager.library.cofig;
 
+import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
@@ -15,7 +16,7 @@ import static com.baomidou.mybatisplus.annotation.DbType.MYSQL;
 @EnableTransactionManagement
 //扫描mapper文件
 @MapperScan("com/librarymanager/library/mapper")
-public class MybatisConfig {
+public class MpConfig {
     //乐观锁插件配置
     @Bean
     public MybatisPlusInterceptor mybatisPlusOptimisticInterceptorOptimistic() {
@@ -31,4 +32,13 @@ public class MybatisConfig {
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(MYSQL));
         return interceptor;
     }
+
+    /**
+     * 分页插件
+     */
+    @Bean
+    public PaginationInnerInterceptor paginationInterceptor() {
+        return new PaginationInnerInterceptor(MYSQL);
+    }
+
 }

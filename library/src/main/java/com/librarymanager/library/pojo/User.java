@@ -21,7 +21,7 @@ public class User implements Serializable {
     private String name;
     private String tel;
     private String email;
-    private Integer level;
+    private Integer Level;
     //字段添加填充类容
     @TableField(fill = FieldFill.INSERT)
     private Date createTime;
